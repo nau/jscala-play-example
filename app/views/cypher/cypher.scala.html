@@ -1,0 +1,42 @@
+@(cypherForm: Form[CypherText], t: String, js: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@title = {
+    AES Cypher Example
+}
+
+@main(title, nav = "cypher") {
+
+    @if(t.nonEmpty) {
+        <div class="text-info">
+            <h3>Decrypted text</h3>
+            <p class="text-info"><span class="text-info">@t</span></p>
+        </div>
+    }
+    @helper.form(action = routes.Cypher.submit) {
+
+        <fieldset>
+            <legend>Text to Encrypt</legend>
+            <div class="clearfix  ">
+                <div class="input">
+                    <textarea id="cypherText" name="cypher"></textarea>
+                </div>
+            </div>
+            <legend>Encrypted text</legend>
+            @textarea(
+              cypherForm("text"),
+                'id -> "encrypted",
+                '_label -> "",
+                '_error -> cypherForm.globalError
+            )
+        </fieldset>
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Send Encrypted">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+        
+    }
+    <script language="JavaScript"> @Html(js)</script>
+}
