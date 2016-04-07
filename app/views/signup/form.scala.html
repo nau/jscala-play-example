@@ -1,87 +1,44 @@
-@(signupForm: Form[User], validation: String)
+@(signupForm: Form[User], validation: String)(implicit messages: Messages)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import b3.vertical.fieldConstructor
 
 @title = {
-    Sign Up <small><a href="@routes.SignUp.editForm">Or edit an existing user</a></small>
+    Sign Up
 }
 
 @main(title, nav = "signup") {
-<script language="JavaScript">
+<script type="text/javascript">
     @Html(validation)
 </script>
-    @helper.form(action = routes.SignUp.submit, 'onsubmit -> "validate(this);") {
+    @b3.form(action = routes.SignUp.submit, 'id -> "cypherForm", 'onsubmit -> "validate(this);") {
 
         <fieldset>
             <legend>Account information</legend>
             
-            @inputText(
+            @b3.text(
                 signupForm("username"), 
                 '_label -> "Username", 
-                '_help -> "Please choose a valid username.",
+                '_help -> "Please choose a valid username, at least 4 letters",
                 '_error -> signupForm.globalError
             )
             
-            @inputText(
+            @b3.text(
                 signupForm("email"), '_label -> "Email",
                 '_help -> "Enter a valid email address."
             )
-            
-            @inputPassword(
-                signupForm("password.main"), 
-                '_label -> "Password",
-                '_help -> "A password must be at least 6 characters. "
-            )
-            
-            @inputPassword(
-                signupForm("password.confirm"), 
-                '_label -> "Repeat password",
-                '_help -> "Please repeat your password again.",
-                '_error -> signupForm.error("password")
-            )
-            
+
         </fieldset>
         
         <fieldset>
-            
-            <legend>Contact information</legend>
-            
-            @select(
-                signupForm("profile.country"), 
-                options = options(Countries.list),
-                '_default -> "--- Choose a country ---",
-                '_label -> "Country",
-                '_error -> signupForm("profile.country").error.map(_.withMessage("Please select your country"))
-            )
-            
-            @textarea(
-                signupForm("profile.address"), 
-                '_label -> "Address", 'cols -> 50
-            )
-            
-            @inputText(
-                signupForm("profile.age"), 
-                '_label -> "Age", 'class -> "mini",
-                '_showConstraints -> false
-            )
-              
-        </fieldset>
-        
-        <fieldset>
-            
-            @checkbox(
-                signupForm("accept"), 
-                '_label -> None, '_text -> "You agree to the terms and conditions",
-                '_showConstraints -> false
-            )
-            
-        </fieldset>
         
         <div class="actions">
-            <input type="submit" class="btn primary" value="Sign Up" onsubmit="confirm('Sure?')">
+            <input type="submit" class="btn btn-primary" value="Sign Up" onsubmit="confirm('Sure?')">
             <a href="@routes.Application.index" class="btn">Cancel</a>
         </div>
+            <script type="text/javascript">
+                function valid(a) { return validate(document.getElementById('cypherForm')); };
+                $('#cypherForm').submit(valid);
+            </script>
         
     }
     

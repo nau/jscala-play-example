@@ -1,7 +1,6 @@
-@(cypherForm: Form[CypherText], t: String, js: String)
+@(cypherForm: Form[CypherText], t: String, js: String)(implicit messages: Messages)
 
-@import helper._
-@import helper.twitterBootstrap._
+@import b3.vertical.fieldConstructor
 
 @title = {
     AES Cypher Example
@@ -15,17 +14,17 @@
             <p class="text-info"><span class="text-info">@t</span></p>
         </div>
     }
-    @helper.form(action = routes.Cypher.submit) {
+    @b3.form(action = routes.Cypher.submit) {
 
         <fieldset>
             <legend>Text to Encrypt</legend>
             <div class="clearfix  ">
                 <div class="input">
-                    <textarea id="cypherText" name="cypher"></textarea>
+                    <textarea id="cypherText" name="cypher" class="form-control"></textarea>
                 </div>
             </div>
             <legend>Encrypted text</legend>
-            @textarea(
+            @b3.textarea(
               cypherForm("text"),
                 'id -> "encrypted",
                 '_label -> "",
@@ -33,7 +32,7 @@
             )
         </fieldset>
         <div class="actions">
-            <input type="submit" class="btn primary" value="Send Encrypted">
+            <input type="submit" class="btn btn-primary" value="Send Encrypted">
             <a href="@routes.Application.index" class="btn">Cancel</a>
         </div>
         

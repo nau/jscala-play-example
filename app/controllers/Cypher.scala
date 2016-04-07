@@ -1,6 +1,8 @@
 package controllers
 
-import play.api._
+import javax.inject.Inject
+
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -10,7 +12,9 @@ import scala.util.Random
 
 case class CypherText(text: String)
 
-object Cypher extends Controller {
+class Cypher @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
+  implicit val i18n = messagesApi
+
   val key = Array.fill(4)(Random.nextInt())
 
   val js = {
